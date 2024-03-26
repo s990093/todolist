@@ -1,35 +1,38 @@
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
+import logging
 
-class Log:
-    def __init__(self):
-        self.head = None
+class ColoredFormatter(logging.Formatter):
+    """A custom formatter to add color to log messages."""
 
-    def add_entry(self, entry):
-        new_node = Node(entry)
-        if not self.head:
-            self.head = new_node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = new_node
+    COLORS = {
+        'DEBUG': '\033[94m',  # Blue
+        'INFO': '\033[92m',   # Green
+        'WARNING': '\033[93m',  # Yellow
+        'ERROR': '\033[91m',  # Red
+        'CRITICAL': '\033[95m'  # Purple
+    }
 
-    def display_log(self):
-        current = self.head
-        while current:
-            print(current.data)
-            current = current.next
+    RESET = '\033[0m'
 
-# # 示例用法
-# log = Log()
+    def format(self, record):
+        log_level = record.levelname
+        log_msg = super().format(record)
+        color = self.COLORS.get(log_level, self.RESET)
+        return f"{color}{log_msg}{self.RESET}"
 
-# log.add_entry("2024-03-21: 用户登录")
-# log.add_entry("2024-03-21: 创建新任务")
-# log.add_entry("2024-03-22: 完成项目报告")
-# log.add_entry("2024-03-23: 修改并完成项目报告")
+def setup_logging():
+    """Set up logging configuration."""
+    # 刪除預設的 StreamHandler
+    # root_logger = logging.getLogger()
+    # if root_logger.hasHandlers():
+    #     root_logger.handlers.clear()
 
-# print("=== 日志内容 ===")
-# log.display_log()
+    # logging.basicConfig(level=logging.INFO,  # 將日誌級別設置為 INFO
+    #                     format='%(asctime)s - %(levelname)s - %(message)s',
+    #                     datefmt='%Y-%m-%d %H:%M:%S')
+    # logger = logging.getLogger()
+    # handler = logging.StreamHandler()
+    # formatter = ColoredFormatter('%(asctime)s - %(levelname)s - %(message)s')
+    # handler.setFormatter(formatter)
+    # logger.addHandler(handler)
+    
+    # logger.setLevel(logging.INFO)

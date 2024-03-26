@@ -1,0 +1,26 @@
+{
+    "CH": 
+    {
+        "add_tasks": "新增任務",
+        "add_other_tasks": "新增其他",
+        "analysis": "分析資訊",
+        "task_name": "任務名稱",
+        "task_priority": "任務優先權",
+        "type_error_title": "輸入類型錯誤",
+        "error_empty_mes": "請勿輸入為空值",
+        "confirm": "確認",
+        "table_name": "任務",
+        "table_complete" : "完成",
+        "table_pritory" : "優先度",
+        "table_type" : "類型",
+        "yes" : "完成",
+        "no" : "未完成",
+        "low" : "低",
+        "medium" : "中",
+        "high" : "高",
+        "repeat" : "每日",
+        "short" : "當日",
+        "type" : "類型",
+        "close": "關閉"
+    }
+}
