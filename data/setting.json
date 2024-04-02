@@ -1,0 +1,7 @@
+{
+    "debug": true,
+    "title": "MyTime",
+    "icon": "./asset/notes.png",
+    "asset_dir": "asset",
+    "music_dir": "music"
+}

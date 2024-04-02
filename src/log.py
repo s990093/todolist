@@ -22,17 +22,17 @@ class ColoredFormatter(logging.Formatter):
 def setup_logging():
     """Set up logging configuration."""
     # 刪除預設的 StreamHandler
-    # root_logger = logging.getLogger()
-    # if root_logger.hasHandlers():
-    #     root_logger.handlers.clear()
+    root_logger = logging.getLogger()
+    if root_logger.hasHandlers():
+        root_logger.handlers.clear()
 
-    # logging.basicConfig(level=logging.INFO,  # 將日誌級別設置為 INFO
-    #                     format='%(asctime)s - %(levelname)s - %(message)s',
-    #                     datefmt='%Y-%m-%d %H:%M:%S')
-    # logger = logging.getLogger()
-    # handler = logging.StreamHandler()
-    # formatter = ColoredFormatter('%(asctime)s - %(levelname)s - %(message)s')
-    # handler.setFormatter(formatter)
-    # logger.addHandler(handler)
+    logging.basicConfig(level=logging.INFO,  # 將日誌級別設置為 INFO
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+    logger = logging.getLogger()
+    handler = logging.StreamHandler()
+    formatter = ColoredFormatter('%(asctime)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
     
-    # logger.setLevel(logging.INFO)
+    logger.setLevel(logging.INFO)

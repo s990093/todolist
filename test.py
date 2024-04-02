@@ -1,5 +1,6 @@
 import sys
 import os
+import unittest
 
 # # Get the current directory of the script
 # current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -12,6 +13,14 @@ import os
 from env import ENV
 from src.gui import TodoListGUI
 
+# test
+from src.test.test_db import TestDB
+from src.test.test_gui import TestGUI
+
+
+
+def test():
+    unittest.main()
 
 
 
@@ -19,5 +28,5 @@ if __name__ == '__main__':
     # Your code continues here
     gui = TodoListGUI()
 
-
+    
     gui.run()

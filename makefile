@@ -1,2 +1,2 @@
 test:
-	python3 ./__test__/gui.py
+	cd test && python3 test_db.py

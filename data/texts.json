@@ -2,13 +2,16 @@
     "CH": 
     {
         "add_tasks": "新增任務",
-        "add_other_tasks": "新增其他",
+        "add_other_tasks": "新增其他任務",
+        "add_other_tasks_list": ["每日任務"],
+        "task_type": "任務種類",
         "analysis": "分析資訊",
         "task_name": "任務名稱",
         "task_priority": "任務優先權",
         "type_error_title": "輸入類型錯誤",
         "error_empty_mes": "請勿輸入為空值",
         "confirm": "確認",
+        "cancel": "取消",
         "table_name": "任務",
         "table_complete" : "完成",
         "table_pritory" : "優先度",
@@ -18,9 +21,19 @@
         "low" : "低",
         "medium" : "中",
         "high" : "高",
-        "repeat" : "每日",
-        "short" : "當日",
+        "repeat" : "每日任務",
+        "short" : "普通任務",
+        "notebook_list":[
+            "每日任務",
+            "注意事項"
+        ],
+        "other": "其他",
         "type" : "類型",
-        "close": "關閉"
+        "close": "關閉",
+        "error" : "錯誤",
+        "error_code":{
+            "500": "輸入任務有重複",
+            "501": "不可為空值"
+        }
     }
 }

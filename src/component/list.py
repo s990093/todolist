@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
+from ..texts import ChangeTextField
+
 class TaskFrame:
     def __init__(self, frame: tk.Frame, root: tk.Tk, tasks: list, style: dict, texts: dict, *args, **kwargs):
         self.root = root
@@ -45,65 +47,42 @@ class TaskFrame:
         # Insert tasks
         for idx, task in enumerate(tasks):
             task_name = task['name']
-            completed = task.get('completed')
-            level = self.__level_change_to_text(int(task.get('level')))
-            
-            if completed == 1:
-                completed = self.texts.get("yes")
-            else:
-                completed = self.texts.get("no")
-             
-            task_type = self.__type_change_to_text(task.get("type"))
-            
+            completed = ChangeTextField.int_number_to_complete(self.texts, task.get('completed'))
+            level = ChangeTextField.level_change_to_text(self.texts, int(task.get('level')))
+            task_type = ChangeTextField.type_change_to_text(self.texts, task.get("type"))
             self.task_treeview.insert("", tk.END, values=(task_name, completed,level, task_type))
+            
             
     def toggle_completion(self, event):
         # Get item clicked
-        item_clicked = self.task_treeview.selection()[0]
+        item_clicked = self.task_treeview.selection()
+        if not item_clicked:
+            return
+        task_name = self.task_treeview.item(item_clicked, "values")[0]
+        current_status =  ChangeTextField.complete_to_int_number(self.texts, self.task_treeview.item(item_clicked, "values")[1])
+        new_status = 1 if current_status == 0 else 0 
+        for task in self.tasks:
+            if task['name'] == task_name:
+                task['completed'] = new_status
+                break
         
-        # Toggle completion status
-        current_status = self.task_treeview.item(item_clicked, "values")[1]
+        self.update(self.tasks)
         
-        new_status = '1' if current_status == '0' else '0'  # Toggle status
-        
-        # Update treeview
-        self.task_treeview.item(item_clicked, values=(self.task_treeview.item(item_clicked, "values")[0], new_status, self.task_treeview.item(item_clicked, "values")[2]))
-
-        
-    
+ 
     def update(self, new_tasks: list):
-      
-        self.task_treeview.delete(*self.task_treeview.get_children())
+        # delete old tasks
+        self.task_treeview.delete(*self.task_treeview.get_children())        
         
-        self.tasks = self.__sort(new_tasks)
-        
-        
-        self.populate_tasks(self.tasks)
+        self.populate_tasks(self.__sort(new_tasks))
 
             
     def __sort(self, tasks: list):
         def sort_key(task):
-            return (task["completed"], int(task["level"]))
-
-
+            return (task["completed"], ChangeTextField.level_change_to_text(self.texts, task["level"]))
+        
+        
         sorted_tasks = sorted(tasks, key=sort_key)
         
         return sorted_tasks
     
-    
-    def __level_change_to_text(self, level):
-        level_texts = {
-            1: self.texts.get("high"),
-            2: self.texts.get("medium"),
-            3: self.texts.get("low"),
-        }
-        return level_texts.get(level, "unknown") 
-    
-    
-    def __type_change_to_text(self, task_type):
-        task_type_texts = {
-            0: self.texts.get("repeat"),
-            1: self.texts.get("short")
-        }
-    
-        return task_type_texts.get(task_type, "unknown") 
+  
