@@ -7,8 +7,11 @@ class TestGUI(unittest.TestCase):
     def setUp(self) -> None:
         self.gui = TodoListGUI()
         
+    def tearDown(self) -> None:
+        self.gui.close()
+        
     def test_run_gui(self):
-        self.gui.run()
+        self.gui.command("gui:run --sound = False")
         
     def test_close_gui(self):
         self.gui.run()
@@ -17,6 +20,3 @@ class TestGUI(unittest.TestCase):
     def test_restart_gui(self):
         self.gui.run()
         self.gui.restart()
-        
-    def tearDown(self) -> None:
-        self.gui.close()

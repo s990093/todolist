@@ -9,17 +9,19 @@ import os
 # sys.path.append(parent_dir)
 
 # Now you can perform your imports
-from env import ENV
 from src.gui import TodoListGUI
+from src.base.gui import GUI
+from env import ENV
 
 
 
 
 if __name__ == '__main__':
-    try:
+    # try:
         gui = TodoListGUI()
         gui.run()
-    except Exception as e:
-        # raise Exception(e)
-        sys.exit(0)
+    # except Exception as e:
+    #     # raise Exception(e)
+    #     print(str(e))
+    #     sys.exit(0)
 

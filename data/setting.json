@@ -1,7 +1,9 @@
 {
-    "debug": true,
     "title": "MyTime",
     "icon": "./asset/notes.png",
+    "root_dir": "src",
     "asset_dir": "asset",
-    "music_dir": "music"
+    "music_dir": "music",
+    "static_dir": "static",
+    "css_dir": "./static/css"
 }

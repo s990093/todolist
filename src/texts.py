@@ -1,4 +1,7 @@
-class ChangeTextField:
+from .base.base_class import BaseWithSetting
+
+
+class ChangeTextField(BaseWithSetting):
     """_summary_
 
     Returns:
@@ -94,7 +97,6 @@ class ChangeTextField:
     @staticmethod
     def int_number_to_complete(texts: dict, text: str):
         """_summary_
-
         Args:
             texts (dict): _description_
             text (str): _description_
@@ -106,5 +108,5 @@ class ChangeTextField:
             0:texts.get("yes"),
             1: texts.get("no")
         }
-        return complete_texts.get(text) 
+        return complete_texts.get(text)
     

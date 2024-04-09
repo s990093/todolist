@@ -13,20 +13,12 @@ import unittest
 from env import ENV
 from src.gui import TodoListGUI
 
-# test
+# test unit
 from src.test.test_db import TestDB
 from src.test.test_gui import TestGUI
 
-
-
-def test():
-    unittest.main()
-
+DEBUG = True
 
 
 if __name__ == '__main__':
-    # Your code continues here
-    gui = TodoListGUI()
-
-    
-    gui.run()
+   unittest.main()

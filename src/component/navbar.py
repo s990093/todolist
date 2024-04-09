@@ -34,6 +34,7 @@ class Navbar(BaseFunctionClass):
             (self.texts.get("add_other_tasks"), self.add_other_tasks),
             (self.texts.get("analysis"), self.analyze),
             (self.texts.get("other"), self.other),
+            (self.texts.get("setting"), self.other),
             (self.texts.get("close"), self.close_app)
         ]
 
@@ -43,11 +44,12 @@ class Navbar(BaseFunctionClass):
             
     def add_tasks(self):
         # music
+        self.play_sound_thread
         task_window = tk.Toplevel(self.root, padx=10, pady=10)
         task_window.title(self.texts.get("add_tasks"))
 
         def create_task(task_name, priority, task_type):
-            if not task_name:  # 檢查任務名稱是否為空
+            if not task_name: 
                 self.error_window("501", "error_empty_mes")
                 return
             
@@ -95,8 +97,8 @@ class Navbar(BaseFunctionClass):
         
 
     def analyze(self):
-        # 分析的相應代碼
         pass
+        # self.play_sound("test")
     
     def other(self):
         task_window = tk.Toplevel(self.root, padx=10, pady=10)
