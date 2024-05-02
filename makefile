@@ -4,4 +4,9 @@ test:
 
 
 run:
-	cd '' && '/usr/local/bin/python3'  '<your script here>'  && echo Exit status: $? && exit 1
+	source .venv/bin/activate && python main.py
+
+
+# source .venv/bin/activate
+
+
