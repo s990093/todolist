@@ -7,12 +7,13 @@ import sys
 from PyQt5 import QtWidgets, QtCore, QtWebEngineWidgets
 from rich import pretty
 from rich import print
+from rich.console import Console
 
-import signal
+from src.window import ProcessMonitorWindow
 
 # rich
 pretty.install()
-
+console = Console()
 
 # 找到一个空闲端口
 def find_free_port():
@@ -34,6 +35,7 @@ def is_port_open(host, port, timeout=30):
         time.sleep(1)  # 等待一秒再检查
     return False
 
+
 # 启动 Next.js 服务
 def start_nextjs_server(port):
     project_directory = "todolist-web"
@@ -41,6 +43,16 @@ def start_nextjs_server(port):
     env = os.environ.copy()
     env["PORT"] = str(port)  # 设置环境变量 PORT
 
+    # # 显示要清除 Next.js 缓存
+    # console.log("[bold yellow]正在清除 Next.js 缓存...[/bold yellow]")
+
+    # # 清除 Next.js 缓存
+    # subprocess.run(["npm", "run", "clean"], cwd=project_directory, check=True)
+
+    # 显示启动 Next.js 服务器
+    console.log(f"[bold green]正在启动 Next.js 服务器，端口：{port}...[/bold green]")
+
+    # 启动 Next.js 服务器
     subprocess.Popen(
         ["npm", "run", "dev"], cwd=project_directory, env=env
     )
@@ -51,7 +63,7 @@ def start_pyqt_app(port, nextjs_pid):
     app = QtWidgets.QApplication(sys.argv)
 
     form = QtWidgets.QWidget()
-    form.setWindowTitle("Local Web View")
+    form.setWindowTitle("TODOLIST")
     form.resize(800, 600)
 
     web_view = QtWebEngineWidgets.QWebEngineView(form)
@@ -64,27 +76,36 @@ def start_pyqt_app(port, nextjs_pid):
     form.show()
     
     def terminate_nextjs():
-        print("PyQt 应用程序即将退出，终止 Next.js 进程...")
-        try:
-            os.kill(nextjs_pid, signal.SIGTERM)  
-        except OSError:
-            print("Next.js 进程可能已关闭")
+        console.log("PyQt 应用程序即将退出，终止 Next.js 进程")
+        # try:
+        #     os.kill(nextjs_pid, signal.SIGTERM)  
+        # except OSError:
+        #     console.log("Next.js 进程可能已关闭")
 
     app.aboutToQuit.connect(terminate_nextjs)  
 
 
 
     sys.exit(app.exec_())  # 运行 PyQt 应用程序
+    
+def run_window_ser(pyqt_pid, nextjs_port):
+    console.log(f"[bold green]啟動監控效能process")
+    
 
+
+    app = QtWidgets.QApplication(sys.argv)
+
+
+    # 创建并显示窗口
+    monitor_window = ProcessMonitorWindow(nextjs_port, pyqt_pid)
+    monitor_window.show()
+
+    sys.exit(app.exec_())
 
 # 主程序
-if __name__ == '__main__':
-    
-    print("[italic green]Init!")
-    
+def main(*args, **kwargs):
     # 找到一个空闲端口
     port = find_free_port()
-    
 
     # 创建两个进程
     nextjs_process = multiprocessing.Process(
@@ -99,8 +120,7 @@ if __name__ == '__main__':
     pyqt_process = multiprocessing.Process(
         target=start_pyqt_app, args=(port, nextjs_process.pid,)
     )
-
-
+    
     if not is_port_open("localhost", port):
         print("Next.js 服务器未在超时时间内启动")
         sys.exit(1)  # 退出程序
@@ -108,7 +128,18 @@ if __name__ == '__main__':
     # 启动 PyQt 应用程序
     pyqt_process.start()
 
+
+    window_process =  multiprocessing.Process(
+        target=run_window_ser, args=(pyqt_process.pid, port,)
+    )
+    
+    window_process.start()
+    window_process.join()
+    
     # 等待两个进程完成
     nextjs_process.join()
     pyqt_process.join()
     
+    
+if __name__ == '__main__': 
+    main()

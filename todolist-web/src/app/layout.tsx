@@ -20,15 +20,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="fixed w-full top-0">
-          <Navbar />
+        <div className="flex min-h-screen">
+          {" "}
+          {/* Flex container for the entire layout */}
+          {/* Fixed left-side navbar */}
+          <div className="w-64 h-full fixed bg-blue-500 text-white flex flex-col p-4">
+            {" "}
+            {/* Fixed-width sidebar */}
+            <Navbar /> The Navbar component with your sidebar navigation
+          </div>
+          {/* Main content area */}
+          <div className="flex-1 ml-64">
+            {" "}
+            {/* Ensures space on the left and proper margin */}
+            {children} {/* This is where the page-specific content will go */}
+          </div>
         </div>
-        {/* custom the mt */}
-        <div className="min-h-screen mt-[90px]">{children}</div>
-        <Footer />
       </body>
-      {/* ga */}
-      {/* <GoogleTagManager gtmId="GTM-XYZ" /> */}
+      {/* Google Analytics or other scripts can go here */}
     </html>
   );
 }
