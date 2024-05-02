@@ -1,24 +1,20 @@
+from PyQt5 import QtWidgets, QtCore, QtWebEngineWidgets
 import sys
-import os
-import unittest
-
-# # Get the current directory of the script
-# current_dir = os.path.dirname(os.path.abspath(__file__))
-
-# # # Get the parent directory (one level up) and append it to sys.path
-# parent_dir = os.path.abspath(os.path.join(current_dir, '..'))
-# sys.path.append(parent_dir)
-
-# Now you can perform your imports
-from env import ENV
-from src.gui import TodoListGUI
-
-# test unit
-from src.test.test_db import TestDB
-from src.test.test_gui import TestGUI
-
-DEBUG = True
 
 
 if __name__ == '__main__':
-   unittest.main()
+   app = QtWidgets.QApplication(sys.argv)
+
+   Form = QtWidgets.QWidget()
+   Form.setWindowTitle('Local Web View')
+   Form.resize(800, 600)
+
+   webView = QtWebEngineWidgets.QWebEngineView(Form) 
+   webView.move(0, 0)
+   webView.resize(800, 600)
+
+   # 这里更改 URL 以连接到本地服务器的 3000 端口
+   webView.load(QtCore.QUrl("http://localhost:3000"))  
+
+   Form.show()
+   sys.exit(app.exec_())

@@ -20,16 +20,13 @@ class GUI(BaseFunctionClass):
         self.play_sound("open")
         
         self.db = DB()
-        self.db.creat_table()
-        
+        self.db.creat_table() 
 
         self.window = webview.create_window(
             self.SETTING.get("title"), 
             self.static_path("index.html"),     
             resizable=False,
             )
-        
-        
 
     def error_window(self, error_code: str, error_title: str = "error"):
         """Create and display an error window with given title and message."""

@@ -49,7 +49,6 @@ class DB():
             for repeat_task in repeat_tasks:
                 if name == repeat_task: 
                     data.append(name)
-        print(data)
         return data
 
         

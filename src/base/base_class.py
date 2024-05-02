@@ -8,12 +8,11 @@ from playsound import playsound
 from ..texts import ChangeTextField
 from .tool import to_prase_json
 
-class BaseWithSetting(object):
+class BaseWithSetting:
     SETTING = to_prase_json("./data/setting.json")
     USERSETTING = to_prase_json("./data/user_setting.json")
     TEXTS : dict = to_prase_json("./data/texts.json").get(SETTING.get('language'))
-    ChangeTexts = ChangeTextField()
-    
+    ChangeTexts = ChangeTextField(TEXTS)  
     
     def to_prase_json(self, filename: str) -> dict:
         with open(filename, 'r') as file:
@@ -75,4 +74,5 @@ class BaseFunctionClass(BaseWithSetting):
     
     def data_path(self, filename: str) -> str:
         return self._path("data", filename)
+    
     

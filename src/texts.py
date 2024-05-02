@@ -1,12 +1,6 @@
-from .base.base_class import BaseWithSetting
-
-
-class ChangeTextField(BaseWithSetting):
-    """_summary_
-
-    Returns:
-        _type_: _description_
-    """
+class ChangeTextField():
+    def __init__(self, texts: dict, *args, **kwargs):
+        self.texts = texts
     @staticmethod
     def level_change_to_text(texts: dict, level: int):
         """_summary_

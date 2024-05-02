@@ -1,10 +1,9 @@
+r"""controller view """
 import json
 
 import webview
 
 
-
-from .db import DB
 from .mock import get_faker_tasks
 from .base.gui import GUI
 
@@ -17,7 +16,7 @@ from .component.navbar import Navbar
 # error
 from .base.error import WindowError
 
-class TodoListGUI(GUI):
+class TodoListGUI(GUI):  
     def __init__(self):
         super().__init__()
                 
