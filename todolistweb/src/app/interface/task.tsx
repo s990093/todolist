@@ -2,6 +2,11 @@ export interface TaskType {
   id: number; // Unique identifier for the task
   text: string; // Description of the task
   completed: boolean; // Status of the task
+  time: string; // Time associated with the task
+  desc: string; // Additional description for the task
+  priority: "low" | "medium" | "high"; // Priority level of the task
+  deadline?: string; // Optional deadline for the task
+  tags?: string[]; // Optional tags associated with the task
 }
 
 // Define the props for the Task component

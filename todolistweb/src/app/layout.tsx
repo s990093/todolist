@@ -4,6 +4,7 @@ import { Footer, Navbar } from "./components";
 import { GoogleTagManager } from "@next/third-parties/google";
 
 import "./globals.css";
+import { Provider } from "./hooks/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,24 +20,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="flex min-h-screen">
-          {" "}
-          {/* Flex container for the entire layout */}
-          {/* Fixed left-side navbar */}
-          <div className="w-64 h-full fixed bg-blue-500 text-white flex flex-col p-4">
+      <Provider>
+        <body className={inter.className}>
+          <div className="flex min-h-screen">
             {" "}
-            {/* Fixed-width sidebar */}
-            <Navbar /> The Navbar component with your sidebar navigation
+            {/* Flex container for the entire layout */}
+            {/* Fixed left-side navbar */} {/* Fixed-width sidebar */}
+            <Navbar />
+            {/* Main content area */}
+            <div className="flex-1">
+              {" "}
+              {/* Ensures space on the left and proper margin */}
+              {children} {/* This is where the page-specific content will go */}
+            </div>
           </div>
-          {/* Main content area */}
-          <div className="flex-1 ml-64">
-            {" "}
-            {/* Ensures space on the left and proper margin */}
-            {children} {/* This is where the page-specific content will go */}
-          </div>
-        </div>
-      </body>
+        </body>
+      </Provider>
       {/* Google Analytics or other scripts can go here */}
     </html>
   );

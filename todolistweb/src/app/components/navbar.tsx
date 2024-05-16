@@ -1,18 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../hooks/provider";
 
 // Example of a functional Navbar component
 const Navbar = () => {
+  const { state } = useContext(Context);
   // const [isOpen, setIsOpen] = useState(true); // State to track if the side navbar is open
-
-  const isOpen = true;
 
   // const toggleNavbar = () => {
   //   setIsOpen(!isOpen); // Toggle the state
   // };
 
+  return <div>{state.isRegistered && <RegisteredNavbar />}</div>;
+};
+function RegisteredNavbar() {
+  const isOpen = true;
+
   return (
-    <div>
+    <div className="w-64 h-full fixed bg-blue-500 text-white flex flex-col p-4">
       {/* Top navigation bar with a menu button to open/close the side navbar */}
 
       {/* Side navigation bar */}
@@ -44,6 +49,5 @@ const Navbar = () => {
       </div>
     </div>
   );
-};
-
+}
 export default Navbar;
