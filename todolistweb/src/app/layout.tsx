@@ -28,7 +28,8 @@ export default function RootLayout({
             {/* Fixed left-side navbar */} {/* Fixed-width sidebar */}
             <Navbar />
             {/* Main content area */}
-            <div className="flex-1">
+            {/* ml64 need to change */}
+            <div className="flex-1 ml-64">
               {" "}
               {/* Ensures space on the left and proper margin */}
               {children} {/* This is where the page-specific content will go */}

@@ -14,6 +14,7 @@ export const generateTaskData = (count: number): TaskType[] => {
       priority: faker.helpers.arrayElement(["low", "medium", "high"]),
       deadline: faker.date.future().toISOString(),
       tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
+      type: "math",
     };
     tasks.push(task);
   }
@@ -30,5 +31,6 @@ export const generateOneTaskData = (): TaskType => {
     priority: faker.helpers.arrayElement(["low", "medium", "high"]),
     deadline: faker.date.future().toISOString(),
     tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
+    type: "math",
   };
 };

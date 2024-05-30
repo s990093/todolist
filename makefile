@@ -1,5 +1,5 @@
 test:
-	cd test && python3 test_db.py
+	python test.py
 
 
 
@@ -7,6 +7,8 @@ run:
 	source .venv/bin/activate && python main.py
 
 
+web:
+	cd todolistweb && yarn dev
 # source .venv/bin/activate
 
 

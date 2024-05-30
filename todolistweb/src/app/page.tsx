@@ -8,14 +8,18 @@ import { Context } from "./hooks/provider";
 import { useRouter } from "next/navigation";
 import ParticlesBg from "particles-bg";
 import { generateOneTaskData, generateTaskData } from "../../test/data";
+import { AddTask, sortOriginalTasks, sortTasksByTime } from "./helper/sort";
+import TodoForm from "./todoForm";
 
+function getData() {
+  return sortOriginalTasks(generateTaskData(10));
+}
 // Main Home component with a list of tasks
 export default function Home() {
   const { state } = useContext(Context);
   const router = useRouter();
 
-  const [tasks, setTasks] = useState<TaskType[]>(generateTaskData(10)); // State for managing tasks
-  const [newTask, setNewTask] = useState(""); // State for the input box
+  const [tasks, setTasks] = useState<TaskType[]>(getData()); // State for managing tasks
 
   if (!state.isRegistered) {
     if (typeof window !== "undefined") {
@@ -25,11 +29,12 @@ export default function Home() {
   }
 
   // Function to add a new task
-  const addTask = () => {
-    if (newTask.trim() !== "") {
-      const newTaskObj = generateOneTaskData();
-      setTasks([...tasks, newTaskObj]); // Add to the existing tasks
-      setNewTask(""); // Clear the input box
+  const addTask = (text: string, priority: "low" | "medium" | "high") => {
+    if (text.trim() !== "") {
+      const newTaskObj = AddTask(text, priority);
+      // setTasks([...tasks, newTaskObj]); // Add to the existing tasks
+      const updatedTasks = sortTasksByTime([...tasks, newTaskObj]);
+      setTasks(updatedTasks);
     }
   };
 
@@ -48,25 +53,13 @@ export default function Home() {
   };
 
   return (
-    <main className="fixed min-h-screen flex-col items-center justify-between w-full p-20  ml-64 ">
+    <main className="flex min-h-screen flex-col items-center justify-center w-full p-20 ">
       <h1 className="text-3xl font-bold mb-6">To-Do List</h1>
 
       <div className="w-full max-w-md">
         <ParticlesBg type="tadpole" bg={true} />
         <div className="flex mb-4">
-          <input
-            type="text"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            placeholder="New Task..."
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none"
-          />
-          <button
-            onClick={addTask}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-600"
-          >
-            Add
-          </button>
+          <TodoForm onAddTask={addTask} />
         </div>
 
         <div>

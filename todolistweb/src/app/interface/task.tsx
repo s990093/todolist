@@ -6,6 +6,7 @@ export interface TaskType {
   desc: string; // Additional description for the task
   priority: "low" | "medium" | "high"; // Priority level of the task
   deadline?: string; // Optional deadline for the task
+  type: string;
   tags?: string[]; // Optional tags associated with the task
 }
 

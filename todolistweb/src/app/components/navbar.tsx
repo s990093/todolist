@@ -32,7 +32,7 @@ function RegisteredNavbar() {
             <a href="#home">Home</a>
           </li>
           <li className="mb-2 hover:bg-blue-600 p-2 rounded">
-            <a href="#about">About</a>
+            <a href="analyze">analyze</a>
           </li>
           <li className="mb-2 hover:bg-blue-600 p-2 rounded">
             <a href="#services">Services</a>
