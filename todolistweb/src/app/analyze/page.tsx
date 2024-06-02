@@ -20,11 +20,9 @@ export default function AnalyzePage() {
   const data = getData();
 
   return (
-    <main className="fixed inset-0 overflow-y-auto flex flex-col items-center justify-start ml-32 p-10">
-      <div className="flex flex-col p-2 space-y-4">
-        <AchievementChart tasks={data} />
-        <TakecompletionChart tasks={data} />
-      </div>
+    <main className="fixed inset-0 overflow-y-auto flex flex-col items-center justify-start ml-32">
+      <AchievementChart tasks={data} />
+      <TakecompletionChart tasks={data} />
     </main>
   );
 }

@@ -11,7 +11,7 @@ tokenizer = BertTokenizer.from_pretrained(model_name)
 model = BertModel.from_pretrained(model_name)
 
 # 示例数据
-data = {
+data= {
     "task": ["寫數學作業", "閱讀英文書籍", "寫國文作文", "學習程式設計", "做數學練習", "閱讀國文文章"],
     "category": ["數學", "英文", "國文", "程式", "數學", "國文"]
 }

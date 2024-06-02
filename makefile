@@ -12,3 +12,7 @@ web:
 # source .venv/bin/activate
 
 
+git:
+	git add .
+	git commit -m "this commit"
+	git push
