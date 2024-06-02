@@ -10,6 +10,20 @@ export interface TaskType {
   tags?: string[]; // Optional tags associated with the task
 }
 
+export interface BaseTask {
+  description: string;
+  dueDate: Date;
+  completed: boolean;
+}
+
+export interface classifyTask extends BaseTask {
+  category: string;
+}
+
+export interface TaskCompletion extends BaseTask {
+  subject: string;
+}
+
 // Define the props for the Task component
 export interface TaskProps {
   task: TaskType; // A single task object

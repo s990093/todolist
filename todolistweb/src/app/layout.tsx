@@ -29,7 +29,7 @@ export default function RootLayout({
             <Navbar />
             {/* Main content area */}
             {/* ml64 need to change */}
-            <div className="flex-1 ml-64">
+            <div className="ml-32 flex-1">
               {" "}
               {/* Ensures space on the left and proper margin */}
               {children} {/* This is where the page-specific content will go */}

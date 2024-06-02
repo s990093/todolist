@@ -15,11 +15,7 @@ const TaskItem: React.FC<TaskProps> = ({
     onToggleComplete(task.id);
   };
   return (
-    <div
-      className={`flex justify-between items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-sm ${
-        task.completed ? "line-through" : ""
-      }`}
-    >
+    <div className="flex justify-between items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-sm">
       <div className="flex items-center">
         <input
           type="radio"
@@ -27,7 +23,9 @@ const TaskItem: React.FC<TaskProps> = ({
           onChange={handleClick}
           className="mr-2"
         />
-        <span>{task.text}</span>
+        <span className={`${task.completed ? "line-through" : ""}`}>
+          {task.text}
+        </span>
       </div>
       <button
         onClick={() => onRemove(task.id)}

@@ -61,7 +61,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onAddTask }) => {
           onClick={addTask}
         >
           Add
-          <div className="ml-1 flex items-center ml-[4px]">
+          <div className="ml-1 flex items-center ml-[8px]">
             <FontAwesomeIcon
               icon={faChevronDown}
               className="text-gray-400 cursor-pointer"

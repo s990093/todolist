@@ -1,4 +1,4 @@
-import { TaskType } from "../interface";
+import { classifyTask, TaskType } from "../interface";
 
 // 排序任务时间的函数
 export function sortOriginalTasks(tasks: TaskType[]): TaskType[] {
@@ -38,4 +38,32 @@ export function AddTask(
     type: "someType", // 你可以根據需要給這些屬性指定值
     tags: [], // 你可以根據需要給這些屬性指定值
   };
+}
+export function sortClassifyTasks(tasks: classifyTask[]): {
+  [key: string]: classifyTask[][];
+} {
+  // 將 tasks 按照 category 分組
+  const tasksByCategory: { [key: string]: classifyTask[] } = {};
+  tasks.forEach((task) => {
+    if (!tasksByCategory[task.category]) {
+      tasksByCategory[task.category] = [];
+    }
+    tasksByCategory[task.category].push(task);
+  });
+
+  // 將每個科目的任務按照日期分組
+  const tasksByCategoryAndDate: { [key: string]: classifyTask[][] } = {};
+  Object.entries(tasksByCategory).forEach(([category, tasks]) => {
+    const tasksByDate: { [key: string]: classifyTask[] } = {};
+    tasks.forEach((task) => {
+      const dateKey = task.dueDate.toLocaleDateString();
+      if (!tasksByDate[dateKey]) {
+        tasksByDate[dateKey] = [];
+      }
+      tasksByDate[dateKey].push(task);
+    });
+    tasksByCategoryAndDate[category] = Object.values(tasksByDate);
+  });
+
+  return tasksByCategoryAndDate;
 }

@@ -34,6 +34,7 @@ export default function Home() {
       const newTaskObj = AddTask(text, priority);
       // setTasks([...tasks, newTaskObj]); // Add to the existing tasks
       const updatedTasks = sortTasksByTime([...tasks, newTaskObj]);
+      // Sets
       setTasks(updatedTasks);
     }
   };
@@ -53,15 +54,17 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center w-full p-20 ">
+    <main className="flex min-h-screen flex-col items-center justify-center  ">
+      <ParticlesBg type="tadpole" bg={true} />
+      {/* title */}
       <h1 className="text-3xl font-bold mb-6">To-Do List</h1>
-
       <div className="w-full max-w-md">
-        <ParticlesBg type="tadpole" bg={true} />
+        {/* BG */}
+        {/* form */}
         <div className="flex mb-4">
           <TodoForm onAddTask={addTask} />
         </div>
-
+        {/* body */}
         <div>
           {tasks.map((task) => (
             <Task

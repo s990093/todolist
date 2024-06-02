@@ -1,4 +1,4 @@
-import { TaskType } from "@/app/interface";
+import { classifyTask, TaskType } from "@/app/interface";
 import { faker } from "@faker-js/faker/locale/es";
 
 // 生成虛擬任務資料的函式
@@ -33,4 +33,27 @@ export const generateOneTaskData = (): TaskType => {
     tags: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
     type: "math",
   };
+};
+
+export const generateFakeclassifyTask = (count: number): classifyTask[] => {
+  const tasks: classifyTask[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const task: classifyTask = {
+      category: faker.helpers.arrayElement([
+        "數學",
+        "國文",
+        "英文",
+        "工程數學",
+        "地理",
+      ]),
+      description: faker.lorem.sentence(),
+      dueDate: faker.date.future(),
+      completed: faker.datatype.boolean(),
+    };
+
+    tasks.push(task);
+  }
+
+  return tasks;
 };

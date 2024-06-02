@@ -5,49 +5,60 @@ import { Context } from "../hooks/provider";
 // Example of a functional Navbar component
 const Navbar = () => {
   const { state } = useContext(Context);
-  // const [isOpen, setIsOpen] = useState(true); // State to track if the side navbar is open
+  const [isSidebar, setIsSidebar] = useState(true); // State to track if the navbar is a sidebar
 
-  // const toggleNavbar = () => {
-  //   setIsOpen(!isOpen); // Toggle the state
-  // };
-
-  return <div>{state.isRegistered && <RegisteredNavbar />}</div>;
-};
-function RegisteredNavbar() {
-  const isOpen = true;
+  const toggleNavbarPosition = () => {
+    setIsSidebar(!isSidebar); // Toggle the navbar position
+  };
 
   return (
-    <div className="w-64 h-full fixed bg-blue-500 text-white flex flex-col p-4">
-      {/* Top navigation bar with a menu button to open/close the side navbar */}
-
-      {/* Side navigation bar */}
-      <div
-        className={`fixed top-0 left-0 h-screen bg-blue-700 text-white w-64 p-4 transition-transform duration-300 ease-in-out ${
-          isOpen ? "transform translate-x-0" : "transform -translate-x-full"
-        }`}
-      >
-        <h2 className="text-lg mb-4">Menu</h2>
-        <ul>
-          <li className="mb-2 hover:bg-blue-600 p-2 rounded">
-            <a href="#home">Home</a>
-          </li>
-          <li className="mb-2 hover:bg-blue-600 p-2 rounded">
-            <a href="analyze">analyze</a>
-          </li>
-          <li className="mb-2 hover:bg-blue-600 p-2 rounded">
-            <a href="#services">Services</a>
-          </li>
-          <li className="mb-2 hover:bg-blue-600 p-2 rounded">
-            <a href="#contact">Contact</a>
-          </li>
-          {/* <li>
-            <button className="text-xl" onClick={toggleNavbar}>
-              open {isOpen ? <>{isOpen}</> : <>{isOpen}</>}{" "}
-            </button>
-          </li> */}
-        </ul>
-      </div>
+    <div>
+      {state.isRegistered && <RegisteredNavbar isSidebar={isSidebar} />}
     </div>
   );
+};
+
+const menuItems = [
+  { name: "Home", href: "/" },
+  { name: "Analyze", href: "analyze" },
+  // { name: "Services", href: "#services" },
+  // { name: "Contact", href: "#contact" },
+];
+
+function RegisteredNavbar({ isSidebar }: { isSidebar: boolean }) {
+  return (
+    <>
+      {isSidebar ? (
+        <div className="w-30 h-full fixed bg-blue-500 text-white flex flex-col p-4">
+          <div className="fixed top-0 left-0 h-screen bg-blue-700 text-white  p-4 transition-transform duration-300 ease-in-out transform translate-x-0">
+            <h2 className="text-lg mb-4">Menu</h2>
+            <ul>
+              {menuItems.map((item) => (
+                <li
+                  key={item.name}
+                  className="mb-2 hover:bg-blue-600 p-2 rounded"
+                >
+                  <a href={item.href}>{item.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <div className="w-full fixed top-0 bg-blue-500 text-white flex flex-row p-4">
+          <div className="w-full bg-blue-700 text-white p-4">
+            <ul className="flex space-x-4">
+              {menuItems.map((item) => (
+                <li key={item.name} className="hover:bg-blue-600 p-2 rounded">
+                  <a href={item.href}>{item.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
+
 export default Navbar;
