@@ -18,7 +18,7 @@ export function sortOriginalTasks(tasks: TaskType[]): TaskType[] {
 export function sortTasksByTime(tasks: TaskType[]): TaskType[] {
   return tasks
     .slice()
-    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+    .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
 }
 
 export function AddTask(
@@ -28,15 +28,12 @@ export function AddTask(
   const currentTime = new Date().toISOString(); // 使用 Date 函數獲取當前時間並轉換為 ISO 格式
 
   return {
-    id: Date.now(), // 使用当前时间戳作为唯一ID
+    id: Date.now(),
     text: newTask,
     completed: false,
     time: currentTime, // 使用當前時間
-    desc: "", // 你可以根據需要給這些屬性指定值
     priority: priority, // 你可以根據需要給這些屬性指定值
-    deadline: "", // 你可以根據需要給這些屬性指定值
     type: "someType", // 你可以根據需要給這些屬性指定值
-    tags: [], // 你可以根據需要給這些屬性指定值
   };
 }
 export function sortClassifyTasks(tasks: classifyTask[]): {

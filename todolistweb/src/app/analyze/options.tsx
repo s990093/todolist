@@ -61,9 +61,9 @@ export const options = {
   },
 };
 
-const generateRandomColor = () => {
-  const randomColor = () => Math.floor(Math.random() * 155) + 100; // 生成亮色系的随机颜色
-  return `rgba(${randomColor()},${randomColor()},${randomColor()},0.8)`;
+const generateRandomColor = (opy: number, init: number = 100) => {
+  const randomColor = () => Math.floor(Math.random() * 155) + init;
+  return `rgba(${randomColor()},${randomColor()},${randomColor()},${opy})`;
 };
 
 export const generateChartLabel = (subject: string, data: Object) => {
@@ -71,7 +71,7 @@ export const generateChartLabel = (subject: string, data: Object) => {
   return {
     label: subject,
     data: data,
-    backgroundColor: generateRandomColor(),
+    backgroundColor: generateRandomColor(0.8),
     fill: true,
     tension: 0.3,
   };

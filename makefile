@@ -1,5 +1,5 @@
 test:
-	python test.py
+	source .venv/bin/activate && python tests/test.py
 
 
 

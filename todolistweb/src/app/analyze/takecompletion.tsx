@@ -3,7 +3,7 @@
 import React from "react";
 import { classifyTask } from "../interface";
 import { sortClassifyTasks } from "../helper/sort";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { generateChartLabel, get_lazy_options, options } from "./options";
 
 interface AchievementChartProps {
@@ -68,7 +68,7 @@ const TakecompletionChart: React.FC<AchievementChartProps> = ({ tasks }) => {
     datasets: datasets,
   };
 
-  return <Line options={options} data={chartData} />;
+  return <Bar options={options} data={chartData} />;
 };
 
 export default TakecompletionChart;

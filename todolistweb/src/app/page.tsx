@@ -1,25 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TaskType } from "./interface";
 import Task from "./components/task";
 import { Context } from "./hooks/provider";
 import { useRouter } from "next/navigation";
-import ParticlesBg from "particles-bg";
-import { generateOneTaskData, generateTaskData } from "../../test/data";
+
 import { AddTask, sortOriginalTasks, sortTasksByTime } from "./helper/sort";
 import TodoForm from "./todoForm";
+import LongTermGoalsTable from "./longTermGoal";
+import { createTask, getTasks } from "./api/config";
+import { GetServerSideProps } from "next";
 
-function getData() {
-  return sortOriginalTasks(generateTaskData(10));
-}
+// 每一次請求都會拿到資料
+
 // Main Home component with a list of tasks
+// eslint-disable-next-line @next/next/no-async-client-component
 export default function Home() {
   const { state } = useContext(Context);
   const router = useRouter();
-
-  const [tasks, setTasks] = useState<TaskType[]>(getData()); // State for managing tasks
+  const [tasks, setTasks] = useState<TaskType[]>(
+    sortOriginalTasks(state.taskStatus.tasks)
+  );
 
   if (!state.isRegistered) {
     if (typeof window !== "undefined") {
@@ -32,6 +35,8 @@ export default function Home() {
   const addTask = (text: string, priority: "low" | "medium" | "high") => {
     if (text.trim() !== "") {
       const newTaskObj = AddTask(text, priority);
+      createTask(newTaskObj);
+
       // setTasks([...tasks, newTaskObj]); // Add to the existing tasks
       const updatedTasks = sortTasksByTime([...tasks, newTaskObj]);
       // Sets
@@ -55,7 +60,6 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center  ">
-      <ParticlesBg type="tadpole" bg={true} />
       {/* title */}
       <h1 className="text-3xl font-bold mb-6">To-Do List</h1>
       <div className="w-full max-w-md">
@@ -76,6 +80,9 @@ export default function Home() {
           ))}
         </div>
       </div>
+      {/* <div>
+        <LongTermGoalsTable />
+      </div> */}
     </main>
   );
 }

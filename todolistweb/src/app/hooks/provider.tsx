@@ -1,5 +1,6 @@
 "use client";
 import React, { createContext, useState } from "react";
+import { TaskStatus } from "../interface/api";
 
 interface ContextType {
   state: {
@@ -8,6 +9,7 @@ interface ContextType {
     loading: boolean;
     authenticated: boolean;
     isRegistered: boolean;
+    taskStatus: TaskStatus;
   };
   setIsRegistered: (value: boolean) => void;
 }
@@ -19,17 +21,27 @@ let Context = createContext<ContextType>({
     loading: true,
     authenticated: false,
     isRegistered: false,
+    taskStatus: {
+      tasks_registered: false,
+      tasks_empty: false,
+      tasks: [],
+    },
   },
   setIsRegistered: () => {},
 });
 
-function Provider(props: { children: React.ReactNode }) {
+function Provider(props: {
+  children: React.ReactNode;
+  taskStatus: TaskStatus;
+}) {
+  const { taskStatus } = props;
   const initialState = {
     userID: false,
     user: undefined,
     loading: true,
     authenticated: false,
     isRegistered: true,
+    taskStatus: taskStatus,
   };
 
   const [state, updateState] = useState(initialState);

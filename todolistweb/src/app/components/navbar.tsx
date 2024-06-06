@@ -1,6 +1,8 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { Context } from "../hooks/provider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faHome, faChartBar } from "@fortawesome/free-solid-svg-icons";
 
 // Example of a functional Navbar component
 const Navbar = () => {
@@ -19,10 +21,10 @@ const Navbar = () => {
 };
 
 const menuItems = [
-  { name: "Home", href: "/" },
-  { name: "Analyze", href: "analyze" },
-  // { name: "Services", href: "#services" },
-  // { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/", icon: faHome },
+  { name: "Analyze", href: "analyze", icon: faChartBar },
+  // { name: "Services", href: "#services", icon: faCogs },
+  // { name: "Contact", href: "#contact", icon: faEnvelope },
 ];
 
 function RegisteredNavbar({ isSidebar }: { isSidebar: boolean }) {
@@ -31,14 +33,18 @@ function RegisteredNavbar({ isSidebar }: { isSidebar: boolean }) {
       {isSidebar ? (
         <div className="w-30 h-full fixed bg-blue-500 text-white flex flex-col p-4">
           <div className="fixed top-0 left-0 h-screen bg-blue-700 text-white  p-4 transition-transform duration-300 ease-in-out transform translate-x-0">
-            <h2 className="text-lg mb-4">Menu</h2>
+            <h2 className="text-lg mb-4">
+              <FontAwesomeIcon icon={faBars} /> Menu
+            </h2>
             <ul>
               {menuItems.map((item) => (
                 <li
                   key={item.name}
                   className="mb-2 hover:bg-blue-600 p-2 rounded"
                 >
-                  <a href={item.href}>{item.name}</a>
+                  <a href={item.href}>
+                    <FontAwesomeIcon icon={item.icon} /> {item.name}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -50,7 +56,9 @@ function RegisteredNavbar({ isSidebar }: { isSidebar: boolean }) {
             <ul className="flex space-x-4">
               {menuItems.map((item) => (
                 <li key={item.name} className="hover:bg-blue-600 p-2 rounded">
-                  <a href={item.href}>{item.name}</a>
+                  <a href={item.href}>
+                    <FontAwesomeIcon icon={item.icon} /> {item.name}
+                  </a>
                 </li>
               ))}
             </ul>
