@@ -2,9 +2,9 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
 from .models import *
 
-from src.get_obs import classify_task, get_embeddings
 
 
 # rich
@@ -14,18 +14,14 @@ from rich.console import Console
 
 pretty.install()
 console = Console()
-import torch
-from transformers import BertTokenizer
-from sklearn.preprocessing import LabelEncoder
 
-with open('App/data.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)
 
-# Load the saved model and label encoder
-classifier = torch.load('App/classifier.pt')
-label_encoder = LabelEncoder()
-data['category_encoded'] = label_encoder.fit_transform(data['category'])
+# ai
+from src.Bertchinese import Model as BertchineseModel
 
+
+
+m = BertchineseModel(json_file_path="App/data.json", model_name="src/classifier.pt")
 
 class TaskStatusAPI(APIView):
     def get(self, request):
@@ -52,19 +48,19 @@ class TaskStatusAPI(APIView):
         return Response({
             'tasks_registered': tasks_registered,
             'tasks_empty': tasks_empty,
-            "tasks": latest_serializer.data,
-            "tasks": all_tasks_serializer.data
+            "tasks": all_tasks_serializer.data,
         })
 
 
 class TaskCreateAPIView(APIView):
+
     def post(self, request, format=None):
         try:    
             # ai
-            predicted_category, prediction_score= classify_task(request.data['text'], classifier, label_encoder)
+            predicted_category, prediction_score=  models
             request.data['type'] = predicted_category
             
-            print(request.data, f"prediction_score - > {prediction_score}")
+            print(request.data, f"prediction_score -> {prediction_score}")
 
             serializer = TaskSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -114,17 +110,3 @@ class TaskCreateAPIView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
         
-class TaskClassifier(APIView):
-    def post(self, request, format=None):
-        task = request.data.get('task', '')
-        if not task:
-            return Response({'error': 'No task provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-    
-        
-
-        predicted_category = classify_task(task, classifier, label_encoder)
-        
-        print(f'Task: {task}, Predicted Category: {predicted_category}')
-
-        return Response({'predicted_category': predicted_category}, status=status.HTTP_200_OK)

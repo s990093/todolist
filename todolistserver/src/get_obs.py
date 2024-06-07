@@ -28,25 +28,25 @@ def get_embeddings(text_list):
 
 
 def classify_task(task, classifier, label_encoder, threshold=0.5)-> (tuple | Literal['其他']): 
-            # 預處理任務
-            task = preprocess_task(task)
+        # 預處理任務
+        task = preprocess_task(task)
 
-            # 獲取嵌入向量
-            embedding = get_embeddings([task])[0]
+        # 獲取嵌入向量
+        embedding = get_embeddings([task])[0]
 
-            # 使用模型進行預測
-            category_encoded = classifier.predict([embedding])[0]
+        # 使用模型進行預測
+        category_encoded = classifier.predict([embedding])[0]
 
-            # 獲取預測分數
-            prediction_score = classifier.predict_proba([embedding])[0][category_encoded]
-            
+        # 獲取預測分數
+        prediction_score = classifier.predict_proba([embedding])[0][category_encoded]
+        
 
-            # 如果預測分數低於閾值，顯示警告消息    
-            if prediction_score < threshold:
-                return "其他"
+        # 如果預測分數低於閾值，顯示警告消息    
+        if prediction_score < threshold:
+            return "其他"
 
-            # 轉換編碼為類別標籤
-            category = label_encoder.inverse_transform([category_encoded])[0]
+        # 轉換編碼為類別標籤
+        category = label_encoder.inverse_transform([category_encoded])[0]
 
-            # 返回類別標籤
-            return category, prediction_score
+        # 返回類別標籤
+        return category, prediction_score
