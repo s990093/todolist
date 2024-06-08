@@ -60,7 +60,7 @@ class Model(object):
         with open(self._json_file_path, 'r', encoding='utf-8') as f:
             self.combined_data = json.load(f)
 
-        
+        # BertTokenizer model 
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = BertModel.from_pretrained(model_name)
         self.label_encoder = LabelEncoder()
@@ -112,6 +112,13 @@ class Model(object):
         return category, prediction_score
     
     def train_data(self, solver, max_iter=1000):
+        """_summary_
+
+        Args:
+            solver (_type_): _description_
+            max_iter (int, optional): _description_. Defaults to 1000.
+        """
+        
         tasks = self.combined_data['task']
         categories = self.combined_data['category_encoded']
         embeddings = self.__get_embeddings(tasks)
@@ -149,7 +156,13 @@ class Model(object):
         # 显示模型精度
         accuracy_panel = Panel.fit(f'Accuracy: {accuracy:.2f}', title="Accuracy", border_style="blue")
         self.console.print(accuracy_panel)
+        
     def test(self, new_task: str):
+        """_summary_
+
+        Args:
+            new_task (str): _description_
+        """
         predicted_category , prediction_score= self.classify_task(new_task)
         
         if predicted_category == -1:

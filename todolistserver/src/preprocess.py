@@ -7,6 +7,14 @@ class TaskPreprocessor:
         self.words = pseg.cut("初始化加载分词模型")
 
     def preprocess_task(self, task):
+        """_summary_
+
+        Args:
+            task (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         task = self.remove_keywords(task, ['作業', '課程', '寫', '回', '次'])
         task = self.remove_numbers(task)
         task = task.strip()

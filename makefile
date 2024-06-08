@@ -5,11 +5,12 @@ VENV = source .venv/bin/activate
 
 # Default target
 all: run
-
+test:
+	$(VENV) && python  todolistserver/src/train.py
+	
 # Test target: run unit tests
 test:
-	$(VENV) && python  todolistserver/src/test.py --train
-	# $(VENV) && python  todolistserver/src/test.py --test
+	$(VENV) && python  todolistserver/src/test.py
 
 # Run target: start the main application
 run:
