@@ -17,7 +17,7 @@ import { faChartBar } from "@fortawesome/free-solid-svg-icons";
 Chart.register(CategoryScale);
 
 function getData() {
-  return generateFakeclassifyTask(500);
+  return generateFakeclassifyTask(1000);
 }
 
 export default function AnalyzePage() {

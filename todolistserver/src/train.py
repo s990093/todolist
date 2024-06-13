@@ -1,6 +1,6 @@
 import click
 
-from Bertchinese.trainModel import TrainingModel as Model
+from src.Bertchinese.trainModel import TrainingModel as Model
 
 
 if __name__ == '__main__':
@@ -10,7 +10,7 @@ if __name__ == '__main__':
         "max_iter": 3000
     }
     
-    m = Model("data.json", "classifier.pt", env)
+    m = Model("data.json", "classifier_v2.pkl", env)
     m.train()
     
     

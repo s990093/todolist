@@ -4,7 +4,6 @@ import jieba.posseg as pseg
 class TaskPreprocessor:
     def __init__(self):
         self.vocabulary = ['程式', '數字概論', '作業', '課程', '計算機']
-        self.words = pseg.cut("初始化加载分词模型")
 
     def preprocess_task(self, task):
         """_summary_
@@ -34,4 +33,5 @@ class TaskPreprocessor:
         return ''.join(word for word in task if word in self.vocabulary or word not in self.vocabulary)
 
     def remove_verbs(self, task):
-        return ''.join(word for word, flag in self.words if flag[0] != 'v')
+        words = pseg.cut(task)  # 使用jieba進行分詞並獲取詞性標注結果
+        return ''.join(word.word for word in words if word.flag[0] != 'v') 

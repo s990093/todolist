@@ -1,4 +1,5 @@
 import os
+import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -13,13 +14,14 @@ from src.Bertchinese.baseModel import BaseModel
 __all__ = ['PredictionModel']
 
 class PredictionModel(BaseModel):
-    def __init__(self, json_file_path: str, model_path: str, model_name: str = 'bert-base-chinese', env: dict|None = None, *args, **kwargs):
+    def __init__(self, json_file_path: str, model_path: str, model_name: str = 'bert-base-chinese', env: dict = {}, *args, **kwargs):
         super(PredictionModel, self).__init__(json_file_path, model_path, model_name, *args, **kwargs)
         
-        self.classifier = self.load_model()
-        
-        self.env = env
+        self.classifier = joblib.load(self.model_path)
 
+        # self.classifier = self.load_model()
+
+        self.env = env
 
     def predict(self, task: str):
         """_summary_
@@ -56,8 +58,7 @@ class PredictionModel(BaseModel):
         
         # 返回類別標籤
         return category, prediction_score
-    
-    
+
     
     def test(self, new_task: str):
         """_summary_
@@ -78,4 +79,3 @@ class PredictionModel(BaseModel):
                 padding=(1, 2)
             )
         )
-            

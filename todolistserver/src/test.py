@@ -24,6 +24,7 @@ import click
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import BertTokenizer, BertModel
+from rich import print
 
 # 加載BERT模型和tokenizer
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')

@@ -6,11 +6,20 @@ from transformers import BertModel, BertTokenizer
 from rich import pretty
 from rich.panel import Panel
 from rich.console import Console
+from rich.table import Table
 from src.Bertchinese.preprocess import TaskPreprocessor
+import copy
+
+
+
+__all__ = ['BaseModel']
+
 
 class BaseModel:
     def __init__(self, json_file_path: str, model_path: str, model_name: str = 'bert-base-chinese', *args, **kwargs):
         super(BaseModel, self).__init__(*args, **kwargs)
+        
+        
         self.__script_dir = os.path.dirname(os.path.abspath(__file__))
         self._json_file_path = os.path.join(self.__script_dir, 'json', json_file_path)
         self.model_path = os.path.join(self.__script_dir, model_path)
@@ -19,7 +28,9 @@ class BaseModel:
         
         pretty.install()
         self.console = Console()
-        self.Panel = Panel
+        self.Table = copy.copy(Table)
+        self.Panel = copy.copy(Panel)
+        
         self.console.print(
             Panel.fit(
                 f"[bold green]Load model ->[/bold green] [yellow]{self._model_name}[/yellow] \n[bold green]Model path ->[/bold green] [yellow]{self.model_path}[/yellow]",
@@ -35,9 +46,9 @@ class BaseModel:
         self.tokenizer = BertTokenizer.from_pretrained(self._model_name)
         self.model = BertModel.from_pretrained(self._model_name)
         self.label_encoder = LabelEncoder()
-        self.combined_data['category_encoded'] = self.label_encoder.fit_transform(self.combined_data['category'])
-
         
+        # ???
+        self.combined_data['category_encoded'] = self.label_encoder.fit_transform(self.combined_data['category'])
         
     def get_embeddings(self, text_list: str) -> list:
         embeddings = []
