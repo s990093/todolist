@@ -6,7 +6,7 @@ from transformers import BertModel, BertTokenizer
 from rich import pretty
 from rich.panel import Panel
 from rich.console import Console
-from preprocess import TaskPreprocessor
+from src.Bertchinese.preprocess import TaskPreprocessor
 
 class BaseModel:
     def __init__(self, json_file_path: str, model_path: str, model_name: str = 'bert-base-chinese', *args, **kwargs):
@@ -39,18 +39,17 @@ class BaseModel:
 
         
         
-    def get_embeddings(self, text_list: str):
+    def get_embeddings(self, text_list: str) -> list:
         embeddings = []
         for text in text_list:
             inputs = self.tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=32)
             with torch.no_grad():
                 outputs = self.model(**inputs)
             embeddings.append(outputs.last_hidden_state[:, 0, :].squeeze().numpy())
-        return embeddings
-      
+        return embeddings    
       
     def __str__(self) -> str:
-        print("BaseModel")
+        print(f"{str(self.__module__)}.{self._model_name}")
         
     def load_model(self):
         if os.path.exists(self.model_path):

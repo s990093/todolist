@@ -1,16 +1,14 @@
-.PHONY: test run web git clean install
+.PHONY: all test run web git clean install test-extended venv help
 
 # Virtual environment activation command
 VENV = source .venv/bin/activate
 
 # Default target
 all: run
-test:
-	$(VENV) && python  todolistserver/src/train.py
-	
+
 # Test target: run unit tests
 test:
-	$(VENV) && python  todolistserver/src/test.py
+	$(VENV) && python todolistserver/src/test.py
 
 # Run target: start the main application
 run:
@@ -51,6 +49,7 @@ venv:
 # Help target: display available make targets
 help:
 	@echo "Available targets:"
+	@echo "  all           - Default target, runs the main application"
 	@echo "  test          - Run unit tests"
 	@echo "  run           - Start the main application"
 	@echo "  web           - Start the web application"
@@ -60,4 +59,3 @@ help:
 	@echo "  test-extended - Run extended tests with coverage and linters"
 	@echo "  venv          - Setup virtual environment"
 	@echo "  help          - Display this help message"
-

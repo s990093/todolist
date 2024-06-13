@@ -24,7 +24,7 @@ export default function AnalyzePage() {
   const data = getData();
 
   return (
-    <main className="fixed inset-0 overflow-y-auto flex flex-col items-center justify-start ml-32">
+    <main className="fixed inset-0 overflow-y-auto flex flex-col items-center justify-start ml-32 p-4">
       <div className="p-4 text-2xl font-bold text-gray-800">
         <FontAwesomeIcon icon={faChartBar} /> Analyze
       </div>
@@ -35,7 +35,7 @@ export default function AnalyzePage() {
         <MilestoneChart tasks={data} />
       </div>
 
-      <div className="w-full max-w-4xl p-4 bg-white shadow-md rounded-lg">
+      <div className="w-full  max-w-4xl p-4 bg-white shadow-md rounded-lg">
         <TakecompletionChart tasks={data} />
       </div>
       <div className="w-full max-w-4xl p-4 bg-white shadow-md rounded-lg m-5">

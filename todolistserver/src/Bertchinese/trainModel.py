@@ -17,6 +17,7 @@ class TrainingModel(BaseModel):
                  environment: dict,
                  model_name: str = 'bert-base-chinese', 
                  *args, **kwargs):
+        
         super(TrainingModel, self).__init__(json_file_path, model_path, model_name, *args, **kwargs)
         
         self._environment = environment
@@ -40,20 +41,17 @@ class TrainingModel(BaseModel):
         return np.array(shuffled_embeddings), np.array(shuffled_categories)
 
     def train(self):
-        """Entry point for training the model.
-
-        Args:
-            solver (str): The solver to use in Logistic Regression.
-            max_iter (int, optional): Maximum number of iterations. Defaults to 1000.
-        """
-        embeddings, categories = self.process_data()
+        # embeddings, categories = self.process_data()
+        tasks = self.combined_data['task']
+        categories = self.combined_data['category_encoded']
+        embeddings = self.get_embeddings(tasks)
 
         # Split data into training and testing sets
-        X_train, X_test, y_train, y_test = train_test_split(embeddings, categories, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(embeddings, categories, test_size=0.2, random_state=42,shuffle=True)
 
         # Train the classifier
-        classifier = LogisticRegression(solver= self._environment.get('solver','lbfgs'),
-                                        max_iter= self._environment.get('max_iter', 1000))
+        classifier = LogisticRegression(solver = self._environment.get('solver','lbfgs'),
+                                        max_iter = self._environment.get('max_iter', 1000))
         
         classifier.fit(X_train, y_train)
 

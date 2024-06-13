@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from src.Bertchinese.predictionModel import PredictionModel
+
 from .models import *
 
 
@@ -17,11 +19,15 @@ console = Console()
 
 
 # ai
-from src.Bertchinese import Model as BertchineseModel
+
+
+env = {
+    "threshold": 0.5
+}
 
 
 
-m = BertchineseModel(json_file_path="App/data.json", model_name="src/classifier.pt")
+model = PredictionModel(json_file_path="data.json", model_path="classifier.pt", env=env)
 
 class TaskStatusAPI(APIView):
     def get(self, request):
@@ -43,8 +49,6 @@ class TaskStatusAPI(APIView):
         # 序列化合併後的任務列表
         all_tasks_serializer = TaskSerializer(all_tasks, many=True)
 
-
-
         return Response({
             'tasks_registered': tasks_registered,
             'tasks_empty': tasks_empty,
@@ -53,20 +57,19 @@ class TaskStatusAPI(APIView):
 
 
 class TaskCreateAPIView(APIView):
-
     def post(self, request, format=None):
         try:    
             # ai
-            predicted_category, prediction_score=  models
+            predicted_category, prediction_score = model.predict(request.data['text'])
             request.data['type'] = predicted_category
             
-            print(request.data, f"prediction_score -> {prediction_score}")
 
             serializer = TaskSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
+            print(e)
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request, format=None):

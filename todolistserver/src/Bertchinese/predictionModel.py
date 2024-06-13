@@ -7,28 +7,23 @@ import torch
 from tqdm import tqdm
 import numpy as np
 
-from Bertchinese.baseModel import BaseModel
+from src.Bertchinese.baseModel import BaseModel
 
 
 __all__ = ['PredictionModel']
 
 class PredictionModel(BaseModel):
-    def __init__(self, json_file_path: str, model_path: str, model_name: str = 'bert-base-chinese', *args, **kwargs):
+    def __init__(self, json_file_path: str, model_path: str, model_name: str = 'bert-base-chinese', env: dict|None = None, *args, **kwargs):
         super(PredictionModel, self).__init__(json_file_path, model_path, model_name, *args, **kwargs)
         
         self.classifier = self.load_model()
+        
+        self.env = env
 
 
-    def predict(self, task: str, threshold=0.5):
+    def predict(self, task: str):
         """_summary_
         entry point for classification
-
-        Args:
-            task (str): _description_
-            threshold (float, optional): _description_. Defaults to 0.5.
-
-        Returns:
-            _type_: _description_
         """
         # 預處理任務
         task = self.taskreprocessor.preprocess_task(task)
@@ -44,12 +39,21 @@ class PredictionModel(BaseModel):
         
 
         # 如果預測分數低於閾值，顯示警告消息    
-        if prediction_score < threshold:
+        if prediction_score < self.env.get('threshold', 0.5):
             return -1
 
         # 轉換編碼為類別標籤
         category = self.label_encoder.inverse_transform([category_encoded])[0]
-
+     
+        self.console.print(
+            self.Panel.fit(
+                f"Task -> {task} \nPredicted Category -> {category} \nprediction_score -> {prediction_score}",
+                title="Model Information",
+                border_style="green",
+                padding=(1, 2)
+            )
+        )
+        
         # 返回類別標籤
         return category, prediction_score
     

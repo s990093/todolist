@@ -12,3 +12,5 @@ if __name__ == '__main__':
     
     m = Model("data.json", "classifier.pt", env)
     m.train()
+    
+    
