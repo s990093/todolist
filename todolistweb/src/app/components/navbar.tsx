@@ -9,6 +9,7 @@ import {
   faEnvelope,
   faHome,
   faInfoCircle,
+  faSignOutAlt,
   faStickyNote,
   faUser,
 } from "@fortawesome/free-solid-svg-icons"; // Add appropriate icons
@@ -74,6 +75,10 @@ function RegisteredNavbar({ isSidebar }: { isSidebar: boolean }) {
                 <button className="w-[120px] mt-2 bg-blue-600 hover:bg-blue-700 p-2 rounded flex items-center justify-center">
                   <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
                   About
+                </button>
+                <button className="w-[120px] mt-2 bg-blue-600 hover:bg-red-700 p-2 rounded flex items-center justify-center">
+                  <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                  Leave
                 </button>
               </div>
             </div>
