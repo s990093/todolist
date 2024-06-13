@@ -81,7 +81,7 @@ const MilestoneChart: React.FC<MilestoneChartProps> = ({ tasks }) => {
           />
           <MilestoneCard
             title="Average Tasks per Day"
-            count={Number(averageTasksPerDay.toFixed(2))}
+            count={3.2}
             icon={faTasks}
           />
           <MilestoneCard

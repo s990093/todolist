@@ -9,6 +9,7 @@ import {
   faEnvelope,
   faHome,
   faInfoCircle,
+  faStickyNote,
   faUser,
 } from "@fortawesome/free-solid-svg-icons"; // Add appropriate icons
 
@@ -30,6 +31,7 @@ const Navbar = () => {
 
 const menuItems = [
   { name: "Home", href: "/", icon: faHome },
+  { name: "memo", href: "/memo", icon: faStickyNote },
   { name: "Analyze", href: "analyze", icon: faChartBar },
   { name: "Settings", href: "/settings", icon: faCog },
   { name: "Friend", href: "/profile", icon: faUser },
